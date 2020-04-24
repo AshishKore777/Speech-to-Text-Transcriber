@@ -1,10 +1,12 @@
 """
-    Title: AudioTranscriber
-    File Name: script.py
-    Author:Syeda Atiya Husain and Ashish Kore
+    Title: Speech to Text Transcriber
+    Author:Ashish Kore and Syeda Atiya Husain
     Language: Python
-    Date Created: 12-12-2019
-    Date Modified: 18-12-2019
+    Requirements:
+    Python version-> 3 or later
+    Python Packages or Modules->    1. pydub
+                                    2. speech_recognition
+                                    3. os
 """
 """
 This code is to convert speech into text(using SpeechRecognition Library)
@@ -16,15 +18,18 @@ Fortunately,SpeechRecognition’s interface is nearly identical for each API,
 so what you learn today will be easy to translate to a real-world project.
 """
 
-#Importing necessary library
+#Importing necessary libraries
 from pydub import AudioSegment
 import speech_recognition as sr
 import os
 
 
 def transcribe(recording):
+"""
+This function takes the audio file path as input(parameter) and loads that audio file and generates transcript.
+"""
     tran_list=list()
-    sound = AudioSegment.from_wav(recording)               #loading audio data
+    sound = AudioSegment.from_wav(recording)                    #loading audio data
     sound = sound.set_channels(1)                               #converting stereo audio file into monolog audio file
     sound.export("one_chan.wav", format="wav")                  #Exporting monolog audio file           
 
@@ -32,7 +37,7 @@ def transcribe(recording):
     #This algorithm is splitting the audio on the basis of 15 seconds.
     l=len(sound)
     l2=l
-    Audio_Parts_List=list()                                                        #list to store splitted audio objects 
+    Audio_Parts_List=list()                                     #list to store splitted audio objects 
     m1,m2=(0,15000)
     while True:
         Audio_Parts_List.append(sound[m1:m2])
@@ -74,6 +79,7 @@ def transcribe(recording):
     os.remove("one_chan.wav")
     for i in range(len(Audio_Parts_List)):
         os.remove(f"output_part{i}.wav")
-        
+    
+    #Returning the transcript
     return final_text
         
