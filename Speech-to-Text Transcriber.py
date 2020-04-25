@@ -82,4 +82,3 @@ This function takes the audio file path as input(parameter) and loads that audio
     
     #Returning the transcript
     return final_text
-        
